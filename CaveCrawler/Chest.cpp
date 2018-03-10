@@ -21,11 +21,13 @@ Chest::Chest(std::string name, Player& player)
 
 	std::ifstream inputFile;
 	std::string fileRow;
-	std::vector<int> randomNumbers;	// Vector to store random numbers when choosing which weapons to put into chest
 
 	std::random_device rd; // Obtain random number from hardware
 	std::mt19937 eng(rd()); // Seed the generator
-	std::uniform_int_distribution<> distr(1, 4); // Define the range
+	std::uniform_int_distribution<> distr(1, 2); // Define the range
+
+	int numberItemsInChest = 0;	// Keep track of how many items in the chest
+	const int MAX_ITEMS_CHEST = 5;	// Default: 5
 
 	// Opens the file which houses all the weapons in the game
 	inputFile.open("Storage/Weapons.txt");
@@ -46,13 +48,30 @@ Chest::Chest(std::string name, Player& player)
 			std::istringstream ss(fileRow);
 			std::string token;
 
+			// Break the line of strings up based on the delimiter
 			while (getline(ss, token, ','))
 			{
 				temp.push_back(token);
 			}
 
-			Weapon* weapon = new Weapon(std::stoi(temp[0]), temp[1], temp[2], std::stoi(temp[3]), std::stoi(temp[4]), std::stoi(temp[5]));
-			inventory_.push_back(weapon);
+			if (numberItemsInChest != MAX_ITEMS_CHEST)
+			{
+				// Get a random number to decide if the item gets added to the chest or not
+				// 50-50 chance right now per item
+				int randomNumber = distr(eng);
+				if (randomNumber == 1)
+				{
+					Weapon* weapon = new Weapon(std::stoi(temp[0]), temp[1], temp[2], std::stoi(temp[3]), std::stoi(temp[4]), std::stoi(temp[5]));
+					inventory_.push_back(weapon);
+
+					numberItemsInChest++;
+				}
+			}
+			else
+			{
+				// Chest has 5 items, so break out of while loop
+				break;
+			}
 		}
 	}
 

@@ -8,7 +8,7 @@ Initialize needed game objects
 *****************/
 GameManager::GameManager()
 {
-	// Just testing GIT bullshit
+
 }
 
 /****************

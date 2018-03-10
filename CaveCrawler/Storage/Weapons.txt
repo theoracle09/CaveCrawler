@@ -1,0 +1,19 @@
+/*******************************************
+/	List all weapons in the game here. 
+/	Separate values by comma.
+/	Need to follow this structure:
+/	Attack, Name, Desc, ID, Value, Weight
+/*******************************************
+
+
+
+20,Long Sword,A sword which seems to be pretty long.,100,50,13
+15,Short Sword,A much shorter sword.,101,40,11
+35,Great Axe,YUUUUGGEE axe.,102,60,16
+16,Silver Dagger,A small silver dagger. Vampires beware.,103,30,10
+30,Champion's Sword,This sword belonged to Champion Chamberlain.,104,35,14
+12,Wooden Sword,Small wooden sword.,105,6,12
+23,Lanky Wooden Lance,A pokey spear type lance.,106,12,15
+28,Rusty Iron Pike,Hopefully not too rusty.,107,15,10
+22,Sparkly Glitter Sword,SPARKLESSSSSSSSS.,108,30,15
+8,Wooden Soup Laddle,You can...like...spoon out some soup...I guess.,109,5,5

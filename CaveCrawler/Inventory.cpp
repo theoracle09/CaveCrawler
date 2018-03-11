@@ -138,7 +138,7 @@ void Inventory::viewDetail(int id)
 				std::cout << "|-----------------------------------------------------------|\n\n";
 				
 				// Check if item is already equipped or not
-				if (equippedWeapon_ == nullptr)
+				if (equippedWeapon_ == nullptr || equippedWeapon_->getName() != (*lit)->getName())
 				{
 					std::cout << "Press (E) to equip item.\n";
 				}
@@ -216,6 +216,28 @@ easier to work with in a battle class.
 *****************/
 void Inventory::equipItem(BaseItem* item)
 {
-	item->setIsEquipped(true);
-	equippedWeapon_ = item;
+	// Check if there's already an item equipped
+	if (equippedWeapon_ == nullptr)
+	{
+		item->setIsEquipped(true);
+		equippedWeapon_ = item;
+	} 
+	else if (equippedWeapon_->getName() != item->getName())
+	{
+		item->setIsEquipped(true);
+		unequipItem(equippedWeapon_);
+		equippedWeapon_ = item;
+	}
+}
+
+void Inventory::unequipItem(BaseItem* equippedWeapon)
+{
+	// Loop through entire inventory and reset equipped flag
+	for (std::list<BaseItem*>::iterator lit = inventory_.begin(); lit != inventory_.end(); lit++)
+	{
+		if (equippedWeapon->getName() == (*lit)->getName())
+		{
+			(*lit)->setIsEquipped(false);
+		}
+	}
 }

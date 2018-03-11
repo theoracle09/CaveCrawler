@@ -11,6 +11,11 @@ Enemy::Enemy(int x, int y, std::string name, int health)
 	isDead_ = false;
 }
 
+Enemy::~Enemy()
+{
+
+}
+
 void Enemy::takeDamage(int damageAmount)
 {
 	health_ -= damageAmount;

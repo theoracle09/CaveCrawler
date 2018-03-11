@@ -281,6 +281,15 @@ void Level::processPlayerMove(Player& player, int targetX, int targetY, std::lis
 					Battle battle;
 					battle.MainBattle("player", player, enemies[i]);
 
+					// Check if enemy is dead
+					if (enemies[i].getStatus())
+					{
+						// Remove enemy from vector
+						enemies.erase(enemies.begin() + i);
+						//Update levelData to reflect enemy being gone
+						setTile(enemyX, enemyY, '.');
+					}
+
 					break; // Found the correct enemy, so exit the for loop
 				}
 			}

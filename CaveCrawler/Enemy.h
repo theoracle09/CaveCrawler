@@ -5,6 +5,7 @@ class Enemy
 {
 public:
 	Enemy(int x, int y, std::string name, int health);
+	~Enemy();
 	void takeDamage(int damageAmount);
 
 	// Getters and Setters

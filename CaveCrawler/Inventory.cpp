@@ -246,8 +246,8 @@ int Inventory::getAttack()
 {
 	if (equippedWeapon_ == nullptr)
 	{
-		std::cout << "You don't have anything equipped!\n";
-		system("PAUSE");
+		// Player doesn't have a weapon equipped
+		return 0;
 	}
 	else
 	{

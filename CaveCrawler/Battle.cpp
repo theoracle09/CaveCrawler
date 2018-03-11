@@ -10,6 +10,9 @@ Battle::Battle()
 {
 }
 
+/****************
+Main battle method. 
+*****************/
 void Battle::MainBattle(std::string whoAttackedFirst, Player& player, Enemy& enemy)
 {
 	bool isFirstTurn = true;
@@ -32,6 +35,16 @@ void Battle::playerTurn(Player& player, Enemy& enemy)
 {
 	int attackDamage = 0;
 	int weaponAttackStatMax = player.getAttack();
+
+	// Check if player has a weapon equipped
+	if (weaponAttackStatMax == 0)
+	{
+		isDone_ = true;
+		std::cout << "You don't have anything equipped!\n";
+		system("PAUSE");
+		return;
+	}
+
 	int weaponAttackStatMin = (weaponAttackStatMax * 85) / 100;	// Min is 85% of Max
 
 	std::random_device rd; // Obtain random number from hardware
@@ -50,6 +63,7 @@ void Battle::playerTurn(Player& player, Enemy& enemy)
 	{
 		std::cout << enemy.getName() << " is dead!\n";
 		isDone_ = true;
+		enemy.~Enemy();
 		system("PAUSE");
 	}
 }

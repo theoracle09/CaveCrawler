@@ -21,6 +21,10 @@ char BaseItem::getIsEquipped()
 	{
 		return 'X';
 	}
+	else
+	{
+		return ' ';
+	}
 }
 
 void BaseItem::setIsEquipped(bool isEquipped)

@@ -15,6 +15,8 @@ public:
 
 	// Getters and Setters
 
+	int getAttack();
+
 private:
 	std::list<BaseItem*> inventory_;
 	BaseItem* equippedWeapon_ = nullptr;

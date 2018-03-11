@@ -15,7 +15,7 @@ public:
 	// Getters and Setters
 	void getPosition(int& x, int& y);
 	void setPosition(int x, int y);
-
+	int getAttack() { return inventory_.getAttack(); };
 	int getHealth() { return health_;  };
 	bool getStatus() { return isDead_; };
 	

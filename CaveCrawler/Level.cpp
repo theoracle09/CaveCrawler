@@ -85,7 +85,7 @@ void Level::print(Player& player)
 
 	// Print the HUD
 	// Print top border
-	const int ROW_LENGTH = levelData_[0].size();
+	const size_t ROW_LENGTH = levelData_[0].size();
 	const int NUM_ROWS = 5;
 
 	for (unsigned int i = 0; i < ROW_LENGTH; i++)
@@ -198,7 +198,7 @@ void Level::print(Player& player)
 Takes in a movement from the player (w,s,a,d) and 
 passes the movement to a processor function
 *****************/
-void Level::movePlayer(char input, Player& player, std::list<Chest>& chests)
+void Level::movePlayer(char input, Player& player, std::list<Chest>& chests, std::vector<Enemy>& enemies)
 {
 	int playerX, playerY;
 
@@ -208,19 +208,19 @@ void Level::movePlayer(char input, Player& player, std::list<Chest>& chests)
 	{
 		case 'w':
 		case 'W':
-			processPlayerMove(player, playerX, playerY - 1, chests);
+			processPlayerMove(player, playerX, playerY - 1, chests, enemies);
 			break;
 		case 's':
 		case 'S':
-			processPlayerMove(player, playerX, playerY + 1, chests);
+			processPlayerMove(player, playerX, playerY + 1, chests, enemies);
 			break;
 		case 'a':
 		case 'A':
-			processPlayerMove(player, playerX - 1, playerY, chests);
+			processPlayerMove(player, playerX - 1, playerY, chests, enemies);
 			break;
 		case 'd':
 		case 'D':
-			processPlayerMove(player, playerX + 1, playerY, chests);
+			processPlayerMove(player, playerX + 1, playerY, chests, enemies);
 			break;
 		case 'i':
 		case 'I':
@@ -236,7 +236,7 @@ void Level::movePlayer(char input, Player& player, std::list<Chest>& chests)
 Receives the movement command and checks the target tile to see
 if it's a viable spot to move into
 *****************/
-void Level::processPlayerMove(Player& player, int targetX, int targetY, std::list<Chest>& chests)
+void Level::processPlayerMove(Player& player, int targetX, int targetY, std::list<Chest>& chests, std::vector<Enemy>& enemies)
 {
 	int playerX, playerY;
 
@@ -268,7 +268,23 @@ void Level::processPlayerMove(Player& player, int targetX, int targetY, std::lis
 		}
 		case 'E':
 		{
-			player.takeDamage(15);
+
+			// Find what enemy is located in the spot the player wants to attack
+			for (int i = 0; i < enemies.size(); i++)
+			{
+				// Get enemy's location coords
+				int enemyX, enemyY;
+				enemies[i].getPosition(enemyX, enemyY);
+
+				if (targetX == enemyX && targetY == enemyY)
+				{
+					Battle battle;
+					battle.MainBattle("player", player, enemies[i]);
+
+					break; // Found the correct enemy, so exit the for loop
+				}
+			}
+
 			break;
 		}
 		case 'C':
@@ -369,6 +385,9 @@ void Level::processEnemyMove(Enemy& enemy, int targetX, int targetY)
 			enemy.setPosition(targetX, targetY);
 			setTile(enemyX, enemyY, '.');
 			setTile(targetX, targetY, 'E');
+			break;
+		case '@':
+			
 			break;
 	}
 }

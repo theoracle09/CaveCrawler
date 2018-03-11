@@ -241,3 +241,16 @@ void Inventory::unequipItem(BaseItem* equippedWeapon)
 		}
 	}
 }
+
+int Inventory::getAttack()
+{
+	if (equippedWeapon_ == nullptr)
+	{
+		std::cout << "You don't have anything equipped!\n";
+		system("PAUSE");
+	}
+	else
+	{
+		return equippedWeapon_->getAttack();
+	}
+}

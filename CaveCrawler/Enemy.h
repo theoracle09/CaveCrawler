@@ -14,6 +14,7 @@ public:
 	void setPosition(int x, int y);
 	void getPosition(int& x, int& y);
 	bool getStatus() { return isDead_; };
+	int getHealth() { return health_; };
 
 private:
 	int x_;

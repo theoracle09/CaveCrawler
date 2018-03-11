@@ -188,7 +188,7 @@ void Level::print(Player& player)
 	}
 
 	// Print the map
-	for (unsigned int i = 0; i < levelData_.size(); i++)
+	for (unsigned int i = 0; i < levelData_.size(); ++i)
 	{
 		std::cout << levelData_[i] << std::endl;
 	}
@@ -279,7 +279,7 @@ void Level::processPlayerMove(Player& player, int targetX, int targetY, std::lis
 				if (targetX == enemyX && targetY == enemyY)
 				{
 					Battle battle;
-					battle.MainBattle("player", player, enemies[i]);
+					battle.MainBattle("player", player, enemies[i], this);
 
 					// Check if enemy is dead
 					if (enemies[i].getStatus())

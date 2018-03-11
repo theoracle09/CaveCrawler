@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "Enemy.h"
+#include "Level.h"
 #include <string>
 
 
@@ -8,7 +9,7 @@ class Battle
 {
 public:
 	Battle();
-	void MainBattle(std::string whoAttackedFirst, Player& player, Enemy& enemy);
+	void MainBattle(std::string whoAttackedFirst, Player& player, Enemy& enemy, Level* level);
 
 
 private:

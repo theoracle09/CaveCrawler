@@ -18,11 +18,15 @@ public:
 	virtual int getAttack() { return 0; };
 	virtual int getDefense() { return 0; };
 
+	char getIsEquipped();
+	void setIsEquipped(bool isEquipped);
+
 private:
 	std::string name_;
 	std::string desc_;
 	int id_;
 	int value_;
 	int weight_;
+	bool isEquipped_ = false;
 };
 

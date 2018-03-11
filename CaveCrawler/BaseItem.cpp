@@ -15,5 +15,18 @@ BaseItem::BaseItem(std::string name, std::string desc, int id, int value, int we
 	weight_ = weight;
 }
 
+char BaseItem::getIsEquipped()
+{
+	if (isEquipped_)
+	{
+		return 'X';
+	}
+}
+
+void BaseItem::setIsEquipped(bool isEquipped)
+{
+	isEquipped_ = isEquipped;
+}
+
 
 

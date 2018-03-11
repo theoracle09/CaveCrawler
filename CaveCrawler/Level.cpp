@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Battle.h"
 #include "Level.h"
 #include "Enemy.h"
 #include "Chest.h"
@@ -130,26 +131,35 @@ void Level::print(Player& player)
 			switch (digits)
 			{
 				case 3:
+				{
+
 					for (int i = 0; i < (ROW_LENGTH - 18); i++)
 					{
 						std::cout << " ";
 					}
 					std::cout << "|" << std::endl;
 					break;
+				}
 				case 2:
+				{
+
 					for (int i = 0; i < (ROW_LENGTH - 17); i++)
 					{
 						std::cout << " ";
 					}
 					std::cout << "|" << std::endl;
 					break;
+				}
 				case 1:
+				{
+
 					for (int i = 0; i < (ROW_LENGTH - 16); i++)
 					{
 						std::cout << " ";
 					}
 					std::cout << "|" << std::endl;
 					break;
+				}
 			}
 
 		}
@@ -239,21 +249,30 @@ void Level::processPlayerMove(Player& player, int targetX, int targetY, std::lis
 	switch (newTile)
 	{
 		case '#':
+		{
 			std::cout << "You ran into a wall!" << std::endl;
 			system("PAUSE");
 			break;
+		}
 		case '.':
+		{
 			player.setPosition(targetX, targetY);
 			setTile(playerX, playerY, '.');
 			setTile(targetX, targetY, '@');
 			break;
+		}
 		case 'X':
+		{
 			hasPlayerReachedEnd_ = true;
 			break;
+		}
 		case 'E':
+		{
 			player.takeDamage(15);
 			break;
+		}
 		case 'C':
+		{
 			// Create a comparison name based on the coordinate of where the player wants to go
 			std::string chestName = "Chest" + std::to_string(targetX) + std::to_string(targetY);
 
@@ -266,6 +285,7 @@ void Level::processPlayerMove(Player& player, int targetX, int targetY, std::lis
 				}
 			}
 			break;
+		}
 	}
 }
 

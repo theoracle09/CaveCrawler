@@ -13,8 +13,8 @@ public:
 	Level();
 	void load(std::string file_name, Player& player, std::vector<Enemy>& enemies, std::list<Chest>& chests);
 	void print(Player& player);
-	void movePlayer(char input, Player& player, std::list<Chest>& chests);
-	void processPlayerMove(Player& player, int targetX, int targetY, std::list<Chest>& chests);
+	void movePlayer(char input, Player& player, std::list<Chest>& chests, std::vector<Enemy>& enemies);
+	void processPlayerMove(Player& player, int targetX, int targetY, std::list<Chest>& chests, std::vector<Enemy>& enemies);
 	void moveEnemy(std::vector<Enemy>& enemies);
 	void processEnemyMove(Enemy& enemy, int targetX, int targetY);
 

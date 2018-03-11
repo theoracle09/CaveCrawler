@@ -8,6 +8,23 @@ Enemy::Enemy(int x, int y, std::string name, int health)
 	y_ = y;
 	name_ = name;
 	health_ = health;
+	isDead_ = false;
+}
+
+Enemy::~Enemy()
+{
+
+}
+
+void Enemy::takeDamage(int damageAmount)
+{
+	health_ -= damageAmount;
+
+	if (health_ <= 0)
+	{
+		health_ = 0;
+		isDead_ = true;
+	}
 }
 
 void Enemy::setPosition(int x, int y)

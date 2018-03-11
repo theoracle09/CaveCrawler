@@ -38,7 +38,7 @@ void GameManager::play()
 		// Pause the program and wait for player input
 		playerMove = _getch();
 
-		level_.movePlayer(playerMove, player_, chests_);
+		level_.movePlayer(playerMove, player_, chests_, enemies_);
 		level_.moveEnemy(enemies_);
 	}
 

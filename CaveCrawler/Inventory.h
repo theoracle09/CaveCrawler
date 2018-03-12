@@ -16,6 +16,7 @@ public:
 	// Getters and Setters
 
 	int getAttack();
+	std::string getEquippedName();
 
 private:
 	std::list<BaseItem*> inventory_;

@@ -16,6 +16,7 @@ public:
 	void getPosition(int& x, int& y);
 	void setPosition(int x, int y);
 	int getAttack() { return inventory_.getAttack(); };
+	std::string getEquippedName() { return inventory_.getEquippedName(); };
 	int getHealth() { return health_;  };
 	bool getStatus() { return isDead_; };
 	

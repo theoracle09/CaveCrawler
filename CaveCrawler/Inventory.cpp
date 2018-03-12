@@ -264,3 +264,17 @@ int Inventory::getAttack()
 		return equippedWeapon_->getAttack();
 	}
 }
+
+std::string Inventory::getEquippedName() 
+{
+	if (equippedWeapon_ == nullptr)
+	{
+		// Player doesn't have a weapon equipped
+		return "";
+	}
+	else
+	{
+		return equippedWeapon_->getName();
+	}
+}
+

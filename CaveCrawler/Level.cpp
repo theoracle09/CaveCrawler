@@ -100,28 +100,38 @@ void Level::print(Player& player)
 		}
 	}
 
-	// Print the middle section 
-	for (unsigned int i = 0; i < NUM_ROWS; i++)
-	{
-		// Display the player's health in the middle of the HUD
-		if (i == 2)
-		{
-			int playerHealth = player.getHealth();
-			int digits = 0;
 
-			std::cout << "|" << "     Health: " << std::setw(52) << std::left << playerHealth << "|\n";
-		}
-		else
-		{
-			// Display '|                     |' for the other lines
-			std::cout << "|";
-			for (int j = 0; j < (ROW_LENGTH - 2); j++)
-			{
-				std::cout << " ";
-			}
-			std::cout << "|" << std::endl;
-		}
+	int playerHealth = player.getHealth();
+	int digits = 0;
+
+	std::cout << "|                          Equipped:" << std::setw(32) << "|\n";
+	std::cout << "|" << "     Health: " << std::setw(13) << std::left << playerHealth
+		<< "Weapon:  ";
+	
+	std::string equippedName = player.getEquippedName();
+
+	if (!equippedName.empty())
+	{
+		std::cout << std::setw(32) << equippedName << "|\n";
 	}
+	else
+	{
+		std::cout << std::setw(26) << "Nothing" << "    |\n";
+	}
+	
+	// Display '|                     |' for the other lines
+	std::cout << "|";
+	for (int j = 0; j < (ROW_LENGTH - 2); j++)
+	{
+		std::cout << " ";
+	}
+	std::cout << "|" << std::endl;
+	std::cout << "|";
+	for (int j = 0; j < (ROW_LENGTH - 2); j++)
+	{
+		std::cout << " ";
+	}
+	std::cout << "|" << std::endl;
 
 	// Print the bottom line '*******************'
 	for (int i = 0; i < ROW_LENGTH; i++)

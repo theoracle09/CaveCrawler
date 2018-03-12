@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <iomanip> // setw
 #include <random>
 
 
@@ -108,60 +109,7 @@ void Level::print(Player& player)
 			int playerHealth = player.getHealth();
 			int digits = 0;
 
-			std::cout << "|" << "     Health: " << playerHealth;
-			
-			// Calculate number of digits in player health, and check if 
-			// the playerHealth is 0
-			if (playerHealth > 0)
-			{
-				while (playerHealth)
-				{
-					playerHealth /= 10;
-					digits++;
-				}
-			}
-			else
-			{
-				// Player has died, so to display properly, set digits to 1
-				digits = 1;
-			}
-
-			// Depending on the number of digits in player health, display the correct
-			// number of spaces and the end char "|"
-			switch (digits)
-			{
-				case 3:
-				{
-
-					for (int i = 0; i < (ROW_LENGTH - 18); i++)
-					{
-						std::cout << " ";
-					}
-					std::cout << "|" << std::endl;
-					break;
-				}
-				case 2:
-				{
-
-					for (int i = 0; i < (ROW_LENGTH - 17); i++)
-					{
-						std::cout << " ";
-					}
-					std::cout << "|" << std::endl;
-					break;
-				}
-				case 1:
-				{
-
-					for (int i = 0; i < (ROW_LENGTH - 16); i++)
-					{
-						std::cout << " ";
-					}
-					std::cout << "|" << std::endl;
-					break;
-				}
-			}
-
+			std::cout << "|" << "     Health: " << std::setw(52) << std::left << playerHealth << "|\n";
 		}
 		else
 		{

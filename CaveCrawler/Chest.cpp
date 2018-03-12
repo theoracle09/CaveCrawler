@@ -85,6 +85,7 @@ void Chest::print(Player& player)
 	const int FIELD_LENGTH = 16;	// Number of characters in each table cell
 	char input;
 	std::vector<int> itemIds;
+	bool isVectorEmpty = true;	// Store whether the vector is empty, so as not to add to it again
 
 	while (!isDone)
 	{
@@ -103,11 +104,17 @@ void Chest::print(Player& player)
 				<< std::setw(FIELD_LENGTH/2) << (*lit)->getWeight() << "  |  "
 				<< std::setw(FIELD_LENGTH) << (*lit)->getAttack() << "  |\n";
 
-			// Insert item IDs into seperate vector
-			itemIds.push_back((*lit)->getId());
+			// First check if itemIds vector is empty
+			if (isVectorEmpty)
+			{
+				// Insert item IDs into seperate vector
+				itemIds.push_back((*lit)->getId());
+			}
 
 			counter++;
 		}
+		isVectorEmpty = false;
+
 		std::cout << "|-------------------------------------------------------------------------------------------|\n";
 
 
@@ -123,56 +130,70 @@ void Chest::print(Player& player)
 			isDone = true;
 			break;
 		default:
+			int intInput = input - '0';
 			input--; // Minus 1 on input to match indexes
-			// Check if number typed matches what's displayed
-			for (int i = 0; i < itemIds.size(); i++)
+			if (intInput > itemIds.size())
 			{
-				// input - '0' converts from char to int
-				if ((input - '0') == i)
+				std::cout << "Invalid input. Try again.\n";
+				system("PAUSE");
+				break;
+			}
+			else
+			{
+				// Check if number typed matches what's displayed
+				for (int i = 0; i < itemIds.size(); i++)
 				{
-					std::cout << "\nAre you sure you want this item? (Y)es or (N)o\n";
-					char input2;
-					input2 = _getch();
-
-					switch (input2)
+					// input - '0' converts from char to int
+					if ((input - '0') == i)
 					{
-					case 'y':
-					case 'Y':
-						// Insert item into player's inventory
-						// Loop through chest contents until we get to player's choice
-						for (std::list<BaseItem*>::iterator lit = inventory_.begin(); lit != inventory_.end(); /**/)
+						std::cout << "\nAre you sure you want this item? (Y)es or (N)o\n";
+						char input2;
+						input2 = _getch();
+
+						switch (input2)
 						{
-							// Found the item the player wants to add
-							if ((*lit)->getId() == itemIds[i])
+						case 'y':
+						case 'Y':
+							// Insert item into player's inventory
+							// Loop through chest contents until we get to player's choice
+							for (std::list<BaseItem*>::iterator lit = inventory_.begin(); lit != inventory_.end(); /**/)
 							{
-								// Add item to player's inventory
-								player.addItem((*lit)->getAttack(), (*lit)->getName(), (*lit)->getDesc(), (*lit)->getId(),
-									(*lit)->getValue(), (*lit)->getWeight());
+								// Found the item the player wants to add
+								if ((*lit)->getId() == itemIds[i])
+								{
+									// Add item to player's inventory
+									player.addItem((*lit)->getAttack(), (*lit)->getName(), (*lit)->getDesc(), (*lit)->getId(),
+										(*lit)->getValue(), (*lit)->getWeight());
 
-								// Delete item from chest. erase() returns next position in iterator
-								delete *lit;
-								lit = inventory_.erase(lit);
+									// Delete item from chest. erase() returns next position in iterator
+									delete *lit;
+									lit = inventory_.erase(lit);
 
-								// Delete ID from itemIds vector
-								itemIds.erase(itemIds.begin() + i);
-								break; // Terminate for loop
+									// Delete ID from itemIds vector
+									itemIds.erase(itemIds.begin() + i);
+									break; // Terminate for loop
+								}
+								else
+								{
+									lit++;
+								}
 							}
-							else
-							{
-								lit++;
-							}
-						}
-						break;
-					case 'n':
-					case 'N':
-						continue;
+							break;
+						case 'n':
+						case 'N':
+							continue;
 							break;
 
+						default:
+							std::cout << "Invalid input. Try again\n";
+							system("PAUSE");
+							break;
+						}
 					}
 				}
-			}
 
-			break;
+				break;
+			}
 		}
 
 	}

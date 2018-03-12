@@ -35,14 +35,24 @@ void Inventory::print()
 		}
 		else
 		{
-			std::cout << "|-----------------------------------------------------------------------------------|\n";
-			std::cout << "|   No.   |               Name               |  Equipped  |    Value   |   Weight   |\n";
-			std::cout << "|-----------------------------------------------------------------------------------|\n";
+			std::cout << "|------------------------------------------------------------------------------------------------|\n";
+			std::cout << "|   No.   |               Name               |  Equipped  |  Attk/Def  |    Value   |   Weight   |\n";
+			std::cout << "|------------------------------------------------------------------------------------------------|\n";
 			for (std::list<BaseItem*>::iterator lit = inventory_.begin(); lit != inventory_.end(); lit++)
 			{
 				std::cout << "|" << std::setw(7) << counter << "  |  " << std::setw(30) << (*lit)->getName() << "  |  "
-					<< std::setw(8) << (*lit)->getIsEquipped() << "  |  "
-					<< std::setw(FIELD_LENGTH/2) << (*lit)->getValue() << "  |  "
+					<< std::setw(8) << (*lit)->getIsEquipped() << "  |  ";
+
+					if ((*lit)->getAttack() == 0)
+					{
+						std::cout << std::setw(8) << (*lit)->getDefense() << "  |  ";
+					}
+					else if ((*lit)->getAttack() != 0)
+					{
+						std::cout << std::setw(8) << (*lit)->getAttack() << "  |  ";
+					}
+
+					std::cout << std::setw(FIELD_LENGTH/2) << (*lit)->getValue() << "  |  "
 					<< std::setw(FIELD_LENGTH/2) << (*lit)->getWeight() << "  |\n";
 
 				//Insert ID into vector
@@ -50,7 +60,7 @@ void Inventory::print()
 
 				counter++;
 			}
-			std::cout << "|-----------------------------------------------------------------------------------|\n";
+			std::cout << "|------------------------------------------------------------------------------------------------|\n";
 
 
 			std::cout << "\n\nPress the number of the item you'd like to view more details for.\n";

@@ -104,7 +104,7 @@ void Level::print(Player& player)
 	int playerHealth = player.getHealth();
 	int digits = 0;
 
-	std::cout << "|                          Equipped:" << std::setw(32) << "|\n";
+	std::cout << "|                          Equipped:                              |\n";
 	std::cout << "|" << "     Health: " << std::setw(13) << std::left << playerHealth
 		<< "Weapon:  ";
 	
@@ -112,7 +112,7 @@ void Level::print(Player& player)
 
 	if (!equippedName.empty())
 	{
-		std::cout << std::setw(32) << equippedName << "|\n";
+		std::cout << std::setw(30) << equippedName << "|\n";
 	}
 	else
 	{

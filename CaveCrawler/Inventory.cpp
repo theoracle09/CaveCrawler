@@ -60,10 +60,16 @@ void Inventory::print()
 
 				counter++;
 			}
-			std::cout << "|------------------------------------------------------------------------------------------------|\n";
+			std::cout << "|------------------------------------------------------------------------------------------------|\n\n";
+
+			// Check if an item is equipped. If not, display message telling user how to equip item
+			if (equippedWeapon_ == nullptr)
+			{
+				std::cout << "To equip an item, go into the item's detalied view.\n\n";
+			}
 
 
-			std::cout << "\n\nPress the number of the item you'd like to view more details for.\n";
+			std::cout << "Press the number of the item you'd like to view more details for.\n";
 		}
 
 		std::cout << "(Q)-exit\n";

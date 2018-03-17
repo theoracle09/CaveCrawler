@@ -65,7 +65,7 @@ void Inventory::print()
 			// Check if an item is equipped. If not, display message telling user how to equip item
 			if (equippedWeapon_ == nullptr)
 			{
-				std::cout << "To equip an item, go into the item's detalied view.\n\n";
+				std::cout << "To equip an item, go into the item's detailed view.\n\n";
 			}
 
 

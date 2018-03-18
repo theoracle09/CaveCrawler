@@ -3,6 +3,8 @@
 /	Separate values by comma.
 /	Need to follow this structure:
 /	Attack, Name, Desc, ID, Value, Weight
+/
+/	IMPORTANT: IDs reserved for WEAPONS: 100-199
 /*******************************************
 
 

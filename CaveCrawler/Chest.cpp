@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Chest.h"
 #include "Weapon.h"
+#include "Armor.h"
 #include <conio.h>	// _getch()
 #include <fstream> // File IO
 #include <iomanip>	// setw
@@ -10,72 +11,12 @@
 #include <vector>
 #include <random>
 
-/*****************
-Need to put in a way of randomizing the list and storing that.
--Store all items in a list, then build a new list based on random numbers?
-*******************/
-
 Chest::Chest(std::string name, Player& player)
 {
 	name_ = name;
 
-	std::ifstream inputFile;
-	std::string fileRow;
-
-	std::random_device rd; // Obtain random number from hardware
-	std::mt19937 eng(rd()); // Seed the generator
-	std::uniform_int_distribution<> distr(1, 2); // Define the range
-
-	int numberItemsInChest = 0;	// Keep track of how many items in the chest
-	const int MAX_ITEMS_CHEST = 5;	// Default: 5
-
-	// Opens the file which houses all the weapons in the game
-	inputFile.open("Storage/Weapons.txt");
-
-	if (!inputFile)
-	{
-		std::cout << "Unable to open Weapons.txt. Exiting now.\n";
-		exit(1);
-	}
-
-	while (getline(inputFile, fileRow))
-	{
-		// Check each row and make sure it doesn't include any comments (/)
-		// or empty spaces, which is the NULL
-		if (fileRow[0] != '/' && fileRow[0] != NULL)
-		{
-			std::vector<std::string> temp;
-			std::istringstream ss(fileRow);
-			std::string token;
-
-			// Break the line of strings up based on the delimiter
-			while (getline(ss, token, ','))
-			{
-				temp.push_back(token);
-			}
-
-			if (numberItemsInChest != MAX_ITEMS_CHEST)
-			{
-				// Get a random number to decide if the item gets added to the chest or not
-				// 50-50 chance right now per item
-				int randomNumber = distr(eng);
-				if (randomNumber == 1)
-				{
-					Weapon* weapon = new Weapon(std::stoi(temp[0]), temp[1], temp[2], std::stoi(temp[3]), std::stoi(temp[4]), std::stoi(temp[5]));
-					inventory_.push_back(weapon);
-
-					numberItemsInChest++;
-				}
-			}
-			else
-			{
-				// Chest has 5 items, so break out of while loop
-				break;
-			}
-		}
-	}
-
-	inputFile.close();
+	loadFile(player, "Storage/Weapons.txt", "weapons");
+	loadFile(player, "Storage/Armor.txt", "armor");
 }
 
 void Chest::print(Player& player)
@@ -86,6 +27,7 @@ void Chest::print(Player& player)
 	char input;
 	std::vector<int> itemIds;
 	bool isVectorEmpty = true;	// Store whether the vector is empty, so as not to add to it again
+	int attack = 0;
 
 	while (!isDone)
 	{
@@ -98,11 +40,18 @@ void Chest::print(Player& player)
 		std::cout << "|-------------------------------------------------------------------------------------------|\n";
 		for (std::list<BaseItem*>::iterator lit = inventory_.begin(); lit != inventory_.end(); lit++)
 		{
+			attack = (*lit)->getAttack();
+
+			if (attack == 0)
+			{
+				attack = (*lit)->getDefense();
+			}
+
 			std::cout << "|" << std::setw(7) << counter << "  |  " 
 				<< std::setw(30) << (*lit)->getName() << "  |  "
 				<< std::setw(FIELD_LENGTH/2) << (*lit)->getValue() << "  |  "
 				<< std::setw(FIELD_LENGTH/2) << (*lit)->getWeight() << "  |  "
-				<< std::setw(FIELD_LENGTH) << (*lit)->getAttack() << "  |\n";
+				<< std::setw(FIELD_LENGTH) << attack	<< "  |\n";
 
 			// First check if itemIds vector is empty
 			if (isVectorEmpty)
@@ -197,6 +146,77 @@ void Chest::print(Player& player)
 		}
 
 	}
+}
+
+void Chest::loadFile(Player& player, std::string fileName, std::string itemType)
+{
+	std::ifstream inputFile;
+	std::string fileRow;
+
+	std::random_device rd; // Obtain random number from hardware
+	std::mt19937 eng(rd()); // Seed the generator
+	std::uniform_int_distribution<> distr(1, 2); // Define the range
+
+	int numberItemsInChest = 0;	// Keep track of how many items in the chest
+	const int MAX_ITEMS_CHEST = 5;	// Default: 5
+
+									// Opens the file which houses all the weapons in the game
+	inputFile.open(fileName);
+
+	if (!inputFile)
+	{
+		std::cout << "Unable to open " << fileName << ". Exiting now.\n";
+		exit(1);
+	}
+
+	while (getline(inputFile, fileRow))
+	{
+		// Check each row and make sure it doesn't include any comments (/)
+		// or empty spaces, which is the NULL
+		if (fileRow[0] != '/' && fileRow[0] != NULL)
+		{
+			std::vector<std::string> temp;
+			std::istringstream ss(fileRow);
+			std::string token;
+
+			// Break the line of strings up based on the delimiter
+			while (getline(ss, token, ','))
+			{
+				temp.push_back(token);
+			}
+
+			if (numberItemsInChest != MAX_ITEMS_CHEST)
+			{
+				// Get a random number to decide if the item gets added to the chest or not
+				// 50-50 chance right now per item
+				int randomNumber = distr(eng);
+				if (randomNumber == 1)
+				{
+					if (itemType == "armor")
+					{
+						Armor* armor = new Armor(std::stoi(temp[0]), temp[1], temp[2], std::stoi(temp[3]), std::stoi(temp[4]), std::stoi(temp[5]));
+						inventory_.push_back(armor);
+
+						numberItemsInChest++;
+					}
+					else if (itemType == "weapons")
+					{
+						Weapon* weapon = new Weapon(std::stoi(temp[0]), temp[1], temp[2], std::stoi(temp[3]), std::stoi(temp[4]), std::stoi(temp[5]));
+						inventory_.push_back(weapon);
+
+						numberItemsInChest++;
+					}
+				}
+			}
+			else
+			{
+				// Chest has 5 items, so break out of while loop
+				break;
+			}
+		}
+	}
+
+	inputFile.close();
 }
 
 

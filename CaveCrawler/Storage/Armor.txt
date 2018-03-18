@@ -1,0 +1,15 @@
+/*******************************************
+/	List all armor in the game here. 
+/	Separate values by comma.
+/	Need to follow this structure:
+/	Defense, Name, Desc, ID, Value, Weight
+/
+/	IMPORTANT: IDs reserved for ARMOR: 200-299
+/*******************************************
+
+
+
+5,Wooden Armor, A set of armor made of bark.,200,18,10
+15,Iron Armor,A set of armor made of iron.,201,25,20
+25,Steel Armor,A set of armor made of steel.,202,37,28
+32,Titanium Armor,A set of armor made of titanium.,203,45,35
